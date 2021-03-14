@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 管理DAO组件 -->
+<bean class = "com.example.demo.adi.StudentDAOImpl" id = "studentDAO"></bean>
+<bean class = "com.example.demo.adi.StudentDAONewImpl" id = "studentDAONewImpl"></bean>
+<!-- 管理service组件
+autowrite:用来给组件中成员变量完成自动赋值操作
+byType:根据类型完成自动注入，根据成员变量的类型去工厂找，找到对应的
+	类型就赋值，找不到就不赋值
+	注意：如果工厂中存在多个类型一致的组件，使用类型自动注入会报错
+byName:根据名称完成自动注入，根据成员变量名字去工厂中获取与之一致名字，
+	，找对应的赋值，找不到不赋值
+ -->
+
+<bean class = "com.example.demo.adi.StudentServiceImpl" id = "studentServiceImpl"
+autowire = "byName"></bean>
+
+</beans>

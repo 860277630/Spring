@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- 先对组件进行管理 -->
+	<bean class="com.example.demo.mybatisDao.service.UserServiceImpl"
+		id="userServiceImpl">
+		<property name="platformTransactionManager"
+			ref="transactionManager"></property>
+	</bean>
+
+	<!-- 然后是对数据库的一系列操作：绑定数据库以及dao层 -->
+	<!-- 创建database链接信息 -->
+	<bean id="dataSource"
+		class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123888"></property>
+	</bean>
+	<!-- 创建sqlSessionFactory 整合链接信息，映射 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 依赖的链接信息 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 注入mapper配置文件 -->
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:mybatisDao/UserDAOMapper.xml</value>
+			</array>
+		</property>
+	</bean>
+	<!-- 创建DAO 组件 将DAO接口和数据库链接绑定在一起 最终也是使用的该ID -->
+	<bean id="UserDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<!-- 注入sqlSessionFactory -->
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<!-- 注入创建DAO接口类型 注入接口的全限定名 包接口名 -->
+		<property name="mapperInterface"
+			value="com.example.demo.mybatisDao.dao.UserDAO"></property>
+	</bean>
+
+
+	<!-- 注册事务，对需要添加事务的添加该配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 注入数据源对象 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+
+
+</beans>

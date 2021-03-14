@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 管理service组件对象 -->
+	<bean class="com.example.demo.aop.EmpServiceImpl"
+		id="empServiceImpl"></bean>
+
+
+	<!-- 注册通知 -->
+	<bean class="com.example.demo.aop.MyBeforeAdvice"
+		id="myBeforeAdvice"></bean>
+
+	<!-- 组装切面 -->
+	<aop:config>
+		<!-- 配置切入点 pointCut id:切入点在工厂中唯一标识 expression: 用来指定切入项目中那些组件中那些方法 execution(返回值 
+			包.类名.*(..)) -->
+		<aop:pointcut
+			expression="execution(* com.example.demo.aop.*ServiceImpl.*(..))"
+			id="pc"></aop:pointcut>
+		<!-- 配置切面 advice-ref :工厂中通知ID pointcut-ref:工厂切入点唯一标识 -->
+		<aop:advisor advice-ref="myBeforeAdvice" pointcut-ref="pc"></aop:advisor>
+	</aop:config>
+</beans>

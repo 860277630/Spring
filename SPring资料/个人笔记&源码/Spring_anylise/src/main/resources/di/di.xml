@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过spring管理组件
+        bean:   用来管理组件对象的创建
+        class:  用来指定管理组件对象的全限定名 包.类
+        id:     用来指定spring框架创建的当前组件对象在spring(容器|工厂)中唯一标识 全局唯一
+                推荐: 接口的首字母小写 userDAO
+    -->
+    <bean class="com.example.demo.di.DeptDAOImpl" id="DeptDAO"></bean>
+
+    <bean class="com.example.demo.di.DeptServiceImpl" id="DeptService">
+    <!-- 依赖的注入 ：
+    property： 用来给组件中属性进行赋值
+    name    ： 用来指定给组件中的哪个属性进行赋值
+    ref     :用来指定赋值对象在工厂中的唯一标识  bean的ID
+    -->
+    <property name = "deptDAO" ref = "DeptDAO"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--通过spring管理组件 bean: 用来管理组件对象的创建 
+	class: 用来指定管理组件对象的全限定名 包.类
+	 id: 用来指定spring框架创建的当前组件对象在spring(容器|工厂)中唯一标识 
+		全局唯一 推荐: 接口的首字母小写 userDAO -->
+	<bean class="com.example.demo.setdi.ClazzDAOImpl"
+		id="clazzDAOImpl"></bean>
+	<bean class="com.example.demo.setdi.ClazzServiceImpl"
+		id="clazzServiceImpl">
+		<!-- 自定义的引用类型用ref注入 -->
+		<property name="clazzDAO" ref="clazzDAOImpl"></property>
+		<!-- set注入相关语法 非自定义类用的是value注入 -->
+		<property name="name" value="小陈123"></property>
+		<property name="age" value="28"></property>
+		<property name="sex" value="true"></property>
+		<property name="price" value="28.88"></property>
+		<property name="counts" value="28.99"></property>
+		<!-- 注意，在spring中，日期的默认写法为：YYYY/MM/dd HH:mm:ss -->
+		<property name="bir" value="2021/12/12"></property>
+		<!-- 数组类型 array来完成实现 -->
+		<property name="qqs">
+			<array>
+				<value>小陈</value>
+				<value>小王</value>
+				<value>小张</value>
+			</array>
+		</property>
+		<property name="clazzDAOs">
+			<array>
+				<ref bean="clazzDAOImpl" />
+				<ref bean="clazzDAOImpl" />
+			</array>
+		</property>
+		<!-- 注入list集合 list -->
+		<property name="habbys">
+			<list>
+				<value>睡觉</value>
+				<value>吃饭</value>
+			</list>
+		</property>
+		<property name="clazzDAOList">
+			<list>
+				<ref bean="clazzDAOImpl" />
+				<ref bean="clazzDAOImpl" />
+			</list>
+		</property>
+		<property name="maps">
+			<map>
+				<entry key="1" value="1"></entry>
+				<entry key="2" value="2"></entry>
+			</map>
+		</property>
+		<property name="properties">
+			<props>
+			<prop key="1">1</prop>
+			<prop key="2">2</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>
